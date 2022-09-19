@@ -1,20 +1,20 @@
 <?php
 require_once('include.php');
 
-//var_dump($_POST);
+var_dump($_REQUEST);
 
 $valid = (bool) true;
 
-if (empty($_POST)) {
-    extract($_POST);
+if (empty($_REQUEST)) {
+    extract($_REQUEST);
 
-    if (isset($_POST['inscription'])) {
-        $nom = htmlentities(trim($_POST['nom']));
-        $prenom = htmlentities(trim($_POST['prenom']));
-        $mail = htmlentities(trim($_POST['mail']));
-        $confmail  = htmlentities(trim($_POST[' confmail ']));
-        $pword = htmlentities(trim($_POST['pword']));
-        $confpassword  = htmlentities(trim($_POST[' confpassword ']));
+    if (isset($_REQUEST['inscription'])) {
+        $nom = htmlentities(trim($_REQUEST['nom']));
+        $prenom = htmlentities(trim($_REQUEST['prenom']));
+        $mail = htmlentities(trim($_REQUEST['mail']));
+        $confmail  = htmlentities(trim($_REQUEST[' confmail ']));
+        $pword = htmlentities(trim($_REQUEST['pword']));
+        $confpassword  = htmlentities(trim($_REQUEST[' confpassword ']));
 
         if (empty($nom)) {
             $valid = false;
@@ -62,9 +62,8 @@ if (empty($_POST)) {
             $date_connexion = date('Y-m-d H:i:s');
 
 
-            $sql = "INSERT INTO `utilisateur`(`nom`, `prenom`, `mail`, `pword`, `date_creation`, `date_connexion`) VALUES (:nom, :prenom :mail, :pword, :date_creation, :date_connexion)";
-            $res = $connexion->prepare($sql);
-            $exec = $res->execute(array(":nom," => $nom, ":prenom," => $prenom, ":mail," => $mail, ":pword," => $crypt_pword, ":date_creation," => $date_creation, ":date_connexion," => $date_connexion));
+            $req = $DB->prepare("INSERT INTO utilisateur(nom, prenom, mail, pword, date_creation, date_connexion) VALUES (:nom, :prenom :mail, :pword, :date_creation, :date_connexion)");
+            $exec = $req->execute(array($nom, $prenom, $mail, $crypt_pword, $date_creation, $date_connexion));
 
             if ($exec) {
                 echo 'Données insérées';

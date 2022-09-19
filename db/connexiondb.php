@@ -1,83 +1,65 @@
 <?php
 
-  // Déclaration d'une nouvelle classe
+// Déclaration d'une nouvelle classe
 
-  class connexionDB {
+class connexionDB
+{
 
-    private $host    = 'localhost';   // nom de l'host
+  private $host    = 'localhost';   // nom de l'host
 
-    private $name    = 'blog';     // nom de la base de donnée
+  private $name    = 'blog';     // nom de la base de donnée
 
-    private $user    = 'root';        // utilisateur
+  private $user    = 'root';        // utilisateur
 
-    private $pass    = '';        // mot de passe
+  private $pass    = '';        // mot de passe
 
-    //private $pass    = '';          // Ne rien mettre si on est sous windows
+  private $connexion;
 
-    private $connexion;
 
-                    
 
-    function __construct($host = null, $name = null, $user = null, $pass = null){
+  function __construct($host = null, $name = null, $user = null, $pass = null)
+  {
 
-      if($host != null){
+    if ($host != null) {
 
-        $this->host = $host;           
+      $this->host = $host;
 
-        $this->name = $name;           
+      $this->name = $name;
 
-        $this->user = $user;          
+      $this->user = $user;
 
-        $this->pass = $pass;
-
-      }
-
-      try{
-
-        $this->connexion = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->name,
-
-          $this->user, $this->pass, array(PDO::MYSQL_ATTR_INIT_COMMAND =>'SET NAMES UTF8', 
-
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
-
-      }catch (PDOException $e){
-
-        echo 'Erreur : Impossible de se connecter  à la BDD !';
-
-        die();
-
-      }
-
+      $this->pass = $pass;
     }
 
-    
+    try {
 
-    public function query($sql, $data = array()){
+      $this->connexion = new PDO(
+        'mysql:host=' . $this->host . ';dbname=' . $this->name,
+        $this->user,
+        $this->pass,
+        array(
+          PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
 
-      $req = $this->connexion->prepare($sql);
+          PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
+        )
+      );
+    } catch (PDOException $e) {
 
-      $req->execute($data);
+      echo 'Erreur : Impossible de se connecter  à la BDD !';
 
-      return $req;
-
+      die();
     }
-
-    
-
-    public function insert($sql, $data = array()){
-
-      $req = $this->connexion->prepare($sql);
-
-      $req->execute($data);
-
-    }
-
   }
 
-  
 
-  // Faire une connexion à votre fonction
 
-  $DB = new connexionDB();
+  public function DB()
+  {
+    return $this->connexion;
+  }
+}
 
-?>
+
+$DBB = new connexionDB();
+
+$DB = $DBB->DB();
