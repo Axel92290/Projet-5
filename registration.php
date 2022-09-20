@@ -1,20 +1,22 @@
 <?php
 require_once('include.php');
 
-var_dump($_REQUEST);
-
-$valid = (bool) true;
-
-if (empty($_REQUEST)) {
+if (!empty($_REQUEST)) {
     extract($_REQUEST);
 
+    //var_dump($_REQUEST);
+
+    $valid = (bool) true;
+
+
+
     if (isset($_REQUEST['inscription'])) {
-        $nom = htmlentities(trim($_REQUEST['nom']));
-        $prenom = htmlentities(trim($_REQUEST['prenom']));
-        $mail = htmlentities(trim($_REQUEST['mail']));
-        $confmail  = htmlentities(trim($_REQUEST[' confmail ']));
-        $pword = htmlentities(trim($_REQUEST['pword']));
-        $confpassword  = htmlentities(trim($_REQUEST[' confpassword ']));
+        $nom = trim($nom);
+        $prenom = trim($prenom);
+        $mail = trim($mail);
+        $confmail  = trim($confmail);
+        $pword = trim($pword);
+        $confpassword  = trim($confpassword);
 
         if (empty($nom)) {
             $valid = false;
@@ -25,6 +27,7 @@ if (empty($_REQUEST)) {
             $valid = false;
             $err_prenom = "Ce champ ne peut pas être vide";
         }
+
 
         if (empty($mail)) {
             $valid = false;
@@ -54,25 +57,18 @@ if (empty($_REQUEST)) {
         }
 
 
+
         if ($valid) {
 
             $crypt_pword = crypt($pword, '$6$rounds=5000$=6kr:f=3QM^qzC/Nn1nPVy<mJ^Ff^/aid}dTF0h|/?2[9~B_2z>v3%&fo$');
-
             $date_creation = date('Y-m-d H:i:s');
             $date_connexion = date('Y-m-d H:i:s');
 
 
-            $req = $DB->prepare("INSERT INTO utilisateur(nom, prenom, mail, pword, date_creation, date_connexion) VALUES (:nom, :prenom :mail, :pword, :date_creation, :date_connexion)");
+            $req = $DB->prepare("INSERT INTO utilisateur(nom, prenom, mail, pword, date_creation, date_connexion) VALUES (?, ?, ?, ?, ?, ?)");
             $exec = $req->execute(array($nom, $prenom, $mail, $crypt_pword, $date_creation, $date_connexion));
-
-            if ($exec) {
-                echo 'Données insérées';
-            } else {
-                echo "Échec de l'opération d'insertion";
-            }
-
-
-            exit;
+        } else {
+            echo 'nok';
         }
     }
 }
@@ -115,7 +111,7 @@ if (empty($_REQUEST)) {
                         <label class="form-label">Nom</label>
                         <input class="form-control" type="text" name="nom" value="<?php if (isset($nom)) {
                                                                                         echo $nom;
-                                                                                    } ?>" />
+                                                                                    } ?>" placeholder="Nom" />
                     </div>
                     <div class="sm-3">
                         <?php if (isset($err_prenom)) {
@@ -124,7 +120,7 @@ if (empty($_REQUEST)) {
                         <label class="form-label">Prénom</label>
                         <input class="form-control" type="text" name="prenom" value="<?php if (isset($prenom)) {
                                                                                             echo $prenom;
-                                                                                        } ?>" />
+                                                                                        } ?>" placeholder="Prenom" />
                     </div>
                     <div class="sm-3">
                         <?php if (isset($err_mail)) {
@@ -133,13 +129,13 @@ if (empty($_REQUEST)) {
                         <label class="form-label">Email</label>
                         <input class="form-control" type="email" name="mail" value="<?php if (isset($mail)) {
                                                                                         echo $mail;
-                                                                                    } ?>" />
+                                                                                    } ?>" placeholder="Mail" />
                     </div>
                     <div class="sm-3">
                         <label class="form-label">Confirmation du mail</label>
                         <input class="form-control" type="email" name="confmail" value="<?php if (isset($confmail)) {
                                                                                             echo $confmail;
-                                                                                        } ?>" />
+                                                                                        } ?>" placeholder="Confirmation du mail" />
                     </div>
                     <div class="sm-3">
                         <?php if (isset($err_pword)) {
@@ -148,11 +144,11 @@ if (empty($_REQUEST)) {
                         <label class="form-label">Mot de passe</label>
                         <input class="form-control" type="password" name="pword" value="<?php if (isset($pword)) {
                                                                                             echo $pword;
-                                                                                        } ?>" />
+                                                                                        } ?>" placeholder="Mot de passe" />
                     </div>
                     <div class="sm-3">
                         <label class="form-label">Confirmation du mot de passe</label>
-                        <input class="form-control" type="password" name="confpassword" value="" placeholder="mot de passe" />
+                        <input class="form-control" type="password" name="confpassword" value="" placeholder="Confirmation du mot de passe" />
                     </div>
                     <div class="sm-3">
                         <button type="submit" name="inscription" class="btn btn-outline-dark">Inscription</button>
