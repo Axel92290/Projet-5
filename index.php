@@ -1,6 +1,8 @@
 <?php
 require_once('include.php');
 
+var_dump($_SESSION);
+
 if (isset($SESSION['id'])) {
     $welcome = "Bonjour " . $_SESSION['prenom'];
 } else {

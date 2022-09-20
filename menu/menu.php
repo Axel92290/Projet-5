@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <?php
-                if (!isset($_SESSION)) {
+                if (isset($_SESSION)) {
 
                 ?>
                     <li class="nav-item">
@@ -15,6 +15,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="form_connexion.php">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="deconnexion.php">Deconnexion</a>
                     </li>
                 <?php
                 } else {
