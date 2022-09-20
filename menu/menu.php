@@ -7,17 +7,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <?php
-                if (isset($_SESSION)) {
+                if (!isset($_SESSION['id'])) {
 
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="form_registration.php">Inscription</a>
+                        <a class="nav-link" href="registration.php">Inscription</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="form_connexion.php">Connexion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="deconnexion.php">Deconnexion</a>
+                        <a class="nav-link" href="connexion.php">Connexion</a>
                     </li>
                 <?php
                 } else {

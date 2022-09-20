@@ -10,67 +10,66 @@ if (isset($_SESSION['id'])) {
 if (!empty($_REQUEST)) {
     extract($_REQUEST);
 
-    $valid = (bool) true;
-
-
     if (isset($_REQUEST['connexion'])) {
-        $mail = trim($mail);
-        $pword = trim($pword);
 
-        if (empty($mail)) {
-            $valid = false;
-            $err_mail = "Ce champ ne peut pas être vide";
-        }
-
-        if (empty($pword)) {
-            $valid = false;
-            $err_pword = "Ce champ ne peut pas être vide";
-        }
-
-
-
-        if ($valid) {
-            $req = $DB->prepare("SELECT pword FROM utilisateur WHERE mail =?");
-            $req->execute(array($mail));
-
-            $req = $req->fetch();
-
-            if (isset($req['pword'])) {
-                if (!password_verify($pword, $req['pword'])) {
-                    $valid = false;
-                    $err_pword = "Les informations rentrées sont incorrectes.";
-                }
-            } else {
-                $valid = false;
-                $err_pword = "Les informations rentrées sont incorrectes.";
-            }
-        }
-
-
-        if ($valid) {
-            $req = $DB->prepare("SELECT * FROM utilisateur WHERE mail =?");
-            $req->execute(array($mail));
-
-            $req_user = $req->fetch();
-
-            if (isset($req_user['id'])) {
-                $date_connexion = date('Y-m-d H:i:s');
-
-
-                $req = $DB->prepare("UPDATE utilisateur SET date_connexion = ? WHERE id = ?");
-                $req->execute(array($date_connexion, $req_user['id']));
-
-                $_SESSION['id'] = $req_user['id'];
-                $_SESSION['prenom'] = $req_user['prenom'];
-                $_SESSION['mail'] = $req_user['mail'];
-                $_SESSION['role'] = $req_user['role'];
-
-                header('Location: index.php');
-                exit;
-            } else {
-                $valid = false;
-                $err_pword = "Les informations rentrées sont incorrectes.";
-            }
-        }
+        [$err_mail, $err_pword] = $_Connexion->verif_connexion($mail, $pword);
     }
 }
+
+?>
+
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <title>Connexion</title>
+    <?php
+    require_once('head/meta.php');
+    require_once('head/link.php');
+    require_once('head/script.php');
+    ?>
+
+
+</head>
+
+<body>
+    <?php
+    require_once('menu/menu.php');
+    ?>
+    <div class="container-sm">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <h1>Connexion</h1>
+                <form method="post" action="">
+                    <div class="sm-3">
+                        <?php if (isset($err_mail)) {
+                            echo '<div>' . $err_mail . '</div>';
+                        } ?>
+                        <label class="form-label">Email</label>
+                        <input class="form-control" type="email" name="mail" value="<?php if (isset($mail)) {
+                                                                                        echo $mail;
+                                                                                    } ?>" placeholder="Mail" />
+                    </div>
+                    <div class="sm-3">
+                        <?php if (isset($err_pword)) {
+                            echo '<div>' . $err_pword . '</div>';
+                        } ?>
+                        <label class="form-label">Mot de passe</label>
+                        <input class="form-control" type="password" name="pword" value="<?php if (isset($pword)) {
+                                                                                            echo $pword;
+                                                                                        } ?>" placeholder="Mot de passe" />
+                    </div>
+                    <div class="sm-3">
+                        <button type="submit" name="connexion" class="btn btn-outline-dark">Se connecter </button>
+                    </div>
+            </div>
+        </div>
+
+        </form>
+        <?php
+        require_once('footer/footer.php');
+        ?>
+</body>
+
+</html>
