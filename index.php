@@ -1,5 +1,13 @@
 <?php
 require_once('include.php');
+
+if (isset($SESSION['id'])) {
+    $welcome = "Bonjour " . $_SESSION['prenom'];
+} else {
+    $welcome = "Bonjour à toi cher visiteur";
+}
+
+
 ?>
 
 
@@ -22,7 +30,12 @@ require_once('include.php');
     <?php
     require_once('menu/menu.php');
     ?>
-    <h1>Hello, world!</h1>
+
+
+    <h1><?= $welcome ?> </h1>
+
+
+
     <?php
     require_once('footer/footer.php');
     ?>

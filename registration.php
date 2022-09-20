@@ -67,10 +67,10 @@ if (!empty($_REQUEST)) {
 
 
             $req = $DB->prepare("INSERT INTO utilisateur(nom, prenom, mail, pword, date_creation, date_connexion) VALUES (?, ?, ?, ?, ?, ?)");
-            $exec = $req->execute(array($nom, $prenom, $mail, $crypt_pword, $date_creation, $date_connexion));
-        }
+            $req->execute(array($nom, $prenom, $mail, $crypt_pword, $date_creation, $date_connexion));
 
-        header('Location: form_connexion.php');
-        exit;
+            header('Location: form_connexion.php');
+            exit;
+        }
     }
 }

@@ -1,5 +1,7 @@
 <?php
 require_once('include.php');
+
+require_once('connexion.php');
 ?>
 
 <!doctype html>

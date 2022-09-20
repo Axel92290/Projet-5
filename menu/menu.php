@@ -6,12 +6,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="form_registration.php">Inscription</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="form_connexion.php">Connexion</a>
-                </li>
+                <?php
+                if (!isset($_SESSION)) {
+
+                ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="form_registration.php">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="form_connexion.php">Connexion</a>
+                    </li>
+                <?php
+                } else {
+                ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="deconnexion.php">Deconnexion</a>
+                    </li>
+                <?php
+                } ?>
+
+
+
             </ul>
         </div>
     </div>

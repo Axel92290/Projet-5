@@ -1,5 +1,6 @@
 <?php
-require_once('registration.php')
+require_once('include.php');
+require_once('registration.php');
 ?>
 
 <!doctype html>
