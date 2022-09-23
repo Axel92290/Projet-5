@@ -21,26 +21,17 @@ if (!empty($_REQUEST)) {
     if (isset($_REQUEST['form1'])) {
         $mail = strip_tags($_REQUEST['mail']);
 
-        var_dump($mail);
 
         if ($mail == $_SESSION['mail']) {
             $valid = false;
-        } elseif (!isset($mail)) {
-            $valid = false;
-            $err_mail = "Ce champ ne peut être vide";
+            $err_mail = "Ce mail est déjà pris";
         } elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             $valid = false;
-            $err_mail = "Le format du mail est invalide.";
+            $err_mail = "Veuillez rentrer un mail valide";
         } else {
             $req = $DB->prepare("SELECT id FROM utilisateur WHERE mail = ?");
             $req->execute([$mail]);
             $req = $req->fetch();
-
-            if (isset($req['id'])) {
-
-                $valid = false;
-                $err_mail = "Ce mail est déjà pris";
-            }
         }
 
 
@@ -52,14 +43,57 @@ if (!empty($_REQUEST)) {
 
             $_SESSION['mail'] = $mail;
 
-            header('Location : Profile/edit_profile.php');
+            header('Location: ./edit_profile.php');
+
             exit;
         }
     } elseif (isset($_REQUEST['form2'])) {
-    }
+        $oldpword = (string) strip_tags($oldpword);
+        $newpword = (string) strip_tags($newpword);
+        $confpword = (string) strip_tags($confpword);
 
-    if (!isset($mail)) {
-        $mail = $req_user['mail'];
+        if (!isset($oldpword)) {
+            $valid = false;
+            $err_mail = "Ce champ ne peut pas être vide";
+        } else {
+            $req = $DB->prepare("SELECT pword FROM utilisateur WHERE id =?");
+            $req->execute([$_SESSION['id']]);
+
+            $req = $req->fetch();
+
+            if (isset($req['pword'])) {
+                if (!password_verify($oldpword, $req['pword'])) {
+                    $valid  = false;
+                    $err_pword = "L'ancien mot de passe est incorect.";
+                }
+            } else {
+                $valid = false;
+                $err_pword = "L'ancien mot de passe est incorect.";
+            }
+        }
+
+        if ($valid) {
+            if (empty($newpword)) {
+                $valid  = false;
+                $err_pword = "Ce champ ne peut pas être vide";
+            } elseif ($newpword <> $confpword) {
+                $valid = false;
+                $err_pword = "Le mot de passe est différent de la confirmation";
+            } elseif ($oldpword == $newpword) {
+                $valid = false;
+                $err_pword = "Le mot de passe doit être différent de l'ancien";
+            }
+        }
+
+        if ($valid) {
+            $crypt_pword = password_hash($newpword, PASSWORD_ARGON2ID);
+            $req =  $DB->prepare('UPDATE utilisateur SET pword = ? WHERE id = ?');
+            $req->execute([$crypt_pword, $_SESSION['id']]);
+
+            header('Location: ./edit_profile.php');
+
+            exit;
+        }
     }
 }
 
@@ -106,6 +140,9 @@ if (!empty($_REQUEST)) {
                 <form method="post">
 
                     <div class=mb-3>
+                        <?php if (isset($err_pword)) {
+                            echo '<div>' . $err_pword . '</div>';
+                        } ?>
                         <input class="form-control" type="password" name="oldpword" placeholder="Ancien Mot de passe" value="" />
                     </div>
 
