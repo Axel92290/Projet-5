@@ -50,7 +50,7 @@ if (!empty($_REQUEST)) {
 
             $_SESSION['mail'] = $mail;
 
-            header('Location : edit_profile.php');
+            header('Location : Profile/edit_profile.php');
             exit;
         }
     } elseif (isset($_REQUEST['form2'])) {
