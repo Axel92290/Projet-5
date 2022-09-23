@@ -19,7 +19,9 @@ if (!empty($_REQUEST)) {
     $valid = true;
 
     if (isset($_REQUEST['form1'])) {
-        $mail = (string) trim($mail);
+        $mail = strip_tags($_REQUEST['mail']);
+
+        var_dump($mail);
 
         if ($mail == $_SESSION['mail']) {
             $valid = false;
