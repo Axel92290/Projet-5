@@ -68,9 +68,9 @@ switch ($req_user['role']) {
                     Rôle utilisateur : <?= $role ?>
                 </div>
 
-
-
-
+                <div>
+                    <a href="Profile/edit_profile.php">Modifier mon profil</a>
+                </div>
 
             </div>
 
