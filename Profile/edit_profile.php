@@ -36,7 +36,6 @@ if (!empty($_REQUEST)) {
         }
 
         if (isset($req['id'])) {
-            echo 1;
             $valid = false;
             $err_mail = "Ce mail est déjà pris";
         }
