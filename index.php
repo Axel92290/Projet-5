@@ -2,7 +2,7 @@
 require_once('include.php');
 
 if (isset($_SESSION['id'])) {
-    $welcome = "Bonjour" . $_SESSION['prenom'];
+    $welcome = "Bonjour " . $_SESSION['prenom'];
 } else {
     $welcome = "Bonjour à toi cher visiteur";
 }

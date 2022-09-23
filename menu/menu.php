@@ -17,25 +17,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="connexion.php">Connexion</a>
                         </li>
-                    </ul>
-                <?php
+
+                    <?php
                 } else {
-                ?>
-                    <ul class="nav justify-content-end">
+                    ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Profile/profile.php">Mon profil</a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="deconnexion.php">Deconnexion</a>
                         </li>
-                        <li>
-                            <a class="nav-link" href="../Profile/profile.php">Mon profil</a>
-                        </li>
-                    </ul>
-
-                <?php
+                    <?php
                 } ?>
 
 
 
-            </ul>
+                    </ul>
         </div>
     </div>
 </nav>

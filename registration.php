@@ -18,12 +18,14 @@ if (!empty($_REQUEST)) {
 <html lang="fr">
 
 <head>
-    <title>Inscription</title>
+
     <?php
     require_once('head/meta.php');
     require_once('head/script.php');
     require_once('head/link.php');
     ?>
+
+    <title>Inscription</title>
 
 </head>
 
