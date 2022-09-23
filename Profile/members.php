@@ -50,7 +50,7 @@ $req_membres = $req->fetchAll();
 
                 <div class="col-3">
                     <?= $rm['nom'] . " " . $rm['prenom']; ?> <br>
-                    <a href="voir-profil.php?id=<?= $rm['id'] ?>">Voir profil</a>
+                    <a href="Profile/voir_profil.php?id=<?= $rm['id'] ?>">Voir profil</a>
                 </div>
             <?php
             }
