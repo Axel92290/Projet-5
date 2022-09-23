@@ -33,12 +33,15 @@ if (!empty($_REQUEST)) {
             $req = $DB->prepare("SELECT id FROM utilisateur WHERE mail = ?");
             $req->execute([$mail]);
             $req = $req->fetch();
+
+            if (isset($req['id'])) {
+
+                $valid = false;
+                $err_mail = "Ce mail est déjà pris";
+            }
         }
 
-        if (isset($req['id'])) {
-            $valid = false;
-            $err_mail = "Ce mail est déjà pris";
-        }
+
 
         if ($valid) {
 
