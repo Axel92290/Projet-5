@@ -6,6 +6,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="Profile/members.php">Membres</a>
+                </li>
                 <?php
                 if (!isset($_SESSION['id'])) {
 
@@ -21,6 +24,8 @@
                     <?php
                 } else {
                     ?>
+
+
                         <li class="nav-item">
                             <a class="nav-link" href="../Profile/profile.php">Mon profil</a>
                         </li>
