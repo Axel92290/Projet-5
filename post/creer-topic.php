@@ -59,18 +59,18 @@ if (!empty($_REQUEST)) {
 
         if ($valid) {
 
-            $date_creation = date_format($date, 'd/m/Y H:i:s');
+            $date_creation = date('Y-m-d H:i:s');
 
-            $req = $DB->prepare("INSERT INTO topics (titre, contenu, date_creation, date_modification, id_post, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?,)");
+            $req = $DB->prepare("INSERT INTO topics (id_post, titre, contenu, date_creation, date_modification, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)");
 
             $req->execute([$req_post_verif['id'], $titre, $contenu, $date_creation, $date_creation, $_SESSION['id']]);
 
             $UID = (int) $DB->lastInsertId();
 
-            if ($UID <= 0) {
-                header('Location : topic.php?id=' . $UID);
+            if ($UID >= 0) {
+                header('Location : post/topic.php?id=' . $UID);
             } else {
-                header('Location : post.php');
+                header('Location : post/post.php');
             }
 
             exit;
@@ -110,7 +110,7 @@ if (!empty($_REQUEST)) {
                         } ?>
                         <label class="form-label">Titre</label>
                         <input class="form-control" type="text" name="titre" value="<?php if (isset($titre)) {
-                                                                                        echo $mail;
+                                                                                        echo $titre;
                                                                                     } ?>" placeholder="Titre" />
                     </div>
                     <div class="sm-3">
@@ -154,11 +154,13 @@ if (!empty($_REQUEST)) {
                                                                                                                     echo $contenu;
                                                                                                                 } ?></textarea>
                     </div>
+
+                    <div class="sm-3">
+                        <button type="submit" name="creation" class="btn btn-outline-dark">Créer mon topic </button>
+                    </div>
                 </form>
 
-                <div class="sm-3">
-                    <button type="submit" name="creation" class="btn btn-outline-dark">Créer mon topic </button>
-                </div>
+
 
 
             </div>
