@@ -49,7 +49,7 @@ $req_list_topics = $req->fetchAll();
     <div class="container-sm">
         <div class="row">
             <div class="col-12">
-                <h1><?= $req_post['title'] ?></h1>
+                <h1><?= $req_post['titre'] ?></h1>
             </div>
             <?php
             foreach ($req_list_topics as $rlt) {
@@ -58,7 +58,7 @@ $req_list_topics = $req->fetchAll();
 
                 <div class="col-3">
                     <?= $rlt['titre']; ?> <br>
-                    <a href="post/list-topics.php?id=<?= $rlt['id'] ?>">Voir les topics</a>
+                    <a href="post/topic.php?id=<?= $rlt['id'] ?>">Lire le topic</a>
                 </div>
             <?php
             }

@@ -32,13 +32,25 @@ $req_post = $req->fetchAll();
             <div class="col-12">
                 <h1>Liste des posts</h1>
             </div>
+            <br>
+
+            <?php if (isset($_SESSION['id'])) {
+            ?>
+                <div>
+                    <a href="post/creer-topic.php">Créer un Topic</a>
+                </div>
+            <?php
+            }
+            ?>
+            <br>
+            <br>
             <?php
             foreach ($req_post as $rp) {
 
             ?>
 
                 <div class="col-3">
-                    <?= $rp['title']; ?> <br>
+                    <?= $rp['titre']; ?> <br>
                     <a href="post/list-topics.php?id=<?= $rp['id'] ?>">Voir les topics</a>
                 </div>
             <?php

@@ -19,6 +19,12 @@ $req->execute([$get_id]);
 
 $req_user = $req->fetch();
 
+$date = date_create($req_user['date_creation']);
+$date_registration = date_format($date, 'd/m/Y');
+
+$date = date_create($req_user['date_connexion']);
+$date_connexion = date_format($date, 'd/m/Y à H:i');
+
 switch ($req_user['role']) {
     case 0:
         $role = "Utilisateur";
@@ -64,11 +70,11 @@ switch ($req_user['role']) {
                 <h1> <?= $req_user['prenom'] ?> <?= $req_user['nom'] ?></h1>
 
                 <div>
-                    Date d'inscription : <?= $req_user['date_creation'] ?>
+                    Date d'inscription : <?= $date_registration ?>
                 </div>
 
                 <div>
-                    Date de dernière connexion : <?= $req_user['date_connexion'] ?>
+                    Date de dernière connexion : <?= $date_connexion ?>
                 </div>
 
                 <div>
