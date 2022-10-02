@@ -68,9 +68,9 @@ if (!empty($_REQUEST)) {
             $UID = (int) $DB->lastInsertId();
 
             if ($UID >= 0) {
-                header('Location : post/topic.php?id=' . $UID);
+                header('Location: ./topic.php?id=' . $UID);
             } else {
-                header('Location : post/post.php');
+                header('Location: ./post.php');
             }
 
             exit;
