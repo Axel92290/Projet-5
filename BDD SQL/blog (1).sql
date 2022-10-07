@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 04 oct. 2022 à 15:43
+-- Généré le : ven. 07 oct. 2022 à 06:51
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.1.10
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `topics` (
   `id_post` int NOT NULL,
   `id_utilisateur` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `topics`
@@ -72,7 +72,8 @@ INSERT INTO `topics` (`id`, `titre`, `contenu`, `date_creation`, `date_modificat
 (1, 'Mon premier topic', 'Bonjour,\r\n\r\nVoici mon premier topic !\r\n\r\nIl est le premier d\'une longue liste', '2022-09-26 08:29:41', '2022-09-27 08:29:41', 1, 1),
 (2, 'Mon deuxième topic', 'Bonjour,\r\n\r\nVoici mon deuxième topic.\r\n\r\nIl est le second et l\'un des plus beaux.', '2022-09-26 08:29:41', '2022-09-27 08:29:41', 1, 1),
 (3, 'Mon troisième topic', 'Bonjour,\r\n\r\nVoici mon troisième topic.\r\n\r\nComme on dit, jamais deux sans trois.', '2022-09-27 08:29:41', '2022-09-27 08:29:41', 2, 1),
-(4, 'Mon quatrième topic', 'Bonjour ,\r\n\r\nCeci est mon quatrième topic.\r\n\r\nIl est magnifique.', '2022-10-02 12:20:33', '2022-10-02 12:20:33', 3, 1);
+(4, 'Mon quatrième topic', 'Bonjour ,\r\n\r\nCeci est mon quatrième topic.\r\n\r\nIl est magnifique.', '2022-10-02 12:20:33', '2022-10-02 12:20:33', 3, 1),
+(7, 'Test', 'test\r\n\r\ntest\r\n\r\ntest', '2022-10-04 16:49:47', '2022-10-04 16:49:47', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `pword`, `date_creation`, `date_connexion`, `role`) VALUES
-(1, 'Chasseloup', 'Axel', 'axel.chasseloup@gmail.com', '$argon2id$v=19$m=65536,t=4,p=1$Zi5Yem9RMmNzRGR1UUl5Ng$CUeWOq7zaWhmHsCjggcTEUp3TQEEq+uKUoiKV2wfoR4', '2022-09-23 18:35:32', '2022-10-02 20:32:49', 1),
+(1, 'Chasseloup', 'Axel', 'axel.chasseloup@gmail.com', '$argon2id$v=19$m=65536,t=4,p=1$Zi5Yem9RMmNzRGR1UUl5Ng$CUeWOq7zaWhmHsCjggcTEUp3TQEEq+uKUoiKV2wfoR4', '2022-09-23 18:35:32', '2022-10-04 16:48:15', 1),
 (2, 'Rossi', 'Adalberto', 'AdalbertoRossi@gmail.com', '$argon2id$v=19$m=65536,t=4,p=1$NFhoNVFyNi5HWjgyTDN6Tw$yAMSCyuQZCz9MGDcsTNc4SLL0DR5EY+3QEb4DAFO8b4', '2022-09-23 08:25:13', '2022-09-23 08:25:13', 0),
 (3, 'Lanoie', 'Delphine', 'DelphineLanoie@gmail.com', '$argon2id$v=19$m=65536,t=4,p=1$Z1haZ2xRLk9ONElsNHBMVg$lsY/Y1peY28evrdrdHaX3ba6ohh47IsAFK8SV8houO0', '2022-09-23 08:26:39', '2022-09-23 08:26:39', 0),
 (4, 'Caouette', 'Gérard', 'GerardCaouette@gmail.com', '$argon2id$v=19$m=65536,t=4,p=1$LmlKMXJBLnd0dVI4S1FpZQ$+cnG2HVCRC/GbcfBJLYjWHiVgs+MxyDRvLONFSR9+uw', '2022-09-23 08:27:27', '2022-09-23 08:27:27', 0),
