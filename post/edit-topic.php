@@ -3,7 +3,31 @@ require_once('../include.php');
 
 if (!isset($_SESSION['id'])) {
 
-    header('Location : index.php');
+    header('Location: ../index.php');
+    exit;
+}
+
+
+if (!isset($_GET['id'])) {
+    header('Location: post.php');
+    exit;
+}
+
+$get_id_topic = (int) $_GET['id'];
+
+if ($get_id_topic <= 0) {
+    header('Location: post.php');
+    exit;
+}
+
+$req = $DB->prepare("SELECT t.*, p.titre AS titre_post FROM topics t INNER JOIN post p ON p.id = t.id_post WHERE t.id=? ");
+
+$req->execute([$get_id_topic]);
+
+$req_topic = $req->fetch();
+
+if (!isset($req_topic['id'])) {
+    header('Location: post.php');
     exit;
 }
 
@@ -19,7 +43,7 @@ if (!empty($_REQUEST)) {
 
     $valid = (bool) true;
 
-    if (isset($_REQUEST['creation'])) {
+    if (isset($_REQUEST['edit'])) {
 
         $titre = (string) ucfirst(trim($titre));
         $categorie = (int) $categorie;
@@ -84,7 +108,7 @@ if (!empty($_REQUEST)) {
 <html lang="fr">
 
 <head>
-    <title>Créer mon Topic</title>
+    <title>Editer mon Topic</title>
     <?php
     require_once('../head/meta.php');
     require_once('../head/link.php');
@@ -102,7 +126,7 @@ if (!empty($_REQUEST)) {
         <div class="row">
             <div class="col-3"></div>
             <div class="col-6">
-                <h1>Créer un topic</h1>
+                <h1>Editer mon topic</h1>
                 <form method="post">
                     <div class="sm-3">
                         <?php if (isset($err_titre)) {
@@ -111,6 +135,8 @@ if (!empty($_REQUEST)) {
                         <label class="form-label">Titre</label>
                         <input class="form-control" type="text" name="titre" value="<?php if (isset($titre)) {
                                                                                         echo $titre;
+                                                                                    } else {
+                                                                                        echo $req_topic['titre'];
                                                                                     } ?>" placeholder="Titre" />
                     </div>
                     <div class="sm-3">
@@ -124,6 +150,13 @@ if (!empty($_REQUEST)) {
                             if (isset($categorie)) {
                             ?>
                                 <option value="<?= $req_post_verif['id'] ?>"> <?= $req_post_verif['titre'] ?> </option>
+                            <?php
+                            } elseif (isset($req_topic['id_post'])) {
+
+                            ?>
+
+                                <option value="<?= $req_topic['id_post'] ?>"> <?= $req_topic['titre_post'] ?> </option>
+
                             <?php
                             } else {
                             ?>
@@ -152,11 +185,13 @@ if (!empty($_REQUEST)) {
                         <label class="form-label">Contenu</label>
                         <textarea class="form-control" type="text" name="contenu" placeholder="Votre topic..."><?php if (isset($contenu)) {
                                                                                                                     echo $contenu;
-                                                                                                                } ?></textarea>
+                                                                                                                } else {
+                                                                                                                    echo $req_topic['contenu'];
+                                                                                                                }  ?></textarea>
                     </div>
 
                     <div class="sm-3">
-                        <button type="submit" name="creation" class="btn btn-outline-dark">Créer mon topic </button>
+                        <button type="submit" name="edit" class="btn btn-outline-dark">Modifier mon topic </button>
                     </div>
                 </form>
 

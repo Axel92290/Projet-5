@@ -47,22 +47,34 @@ $req_topic = $req->fetch();
     ?>
     <div class="container-sm">
         <div class="row">
-            <div class="col-12">
+            <div class="col-3"></div>
+            <div class="col-6">
                 <h1><?= $req_topic['titre'] ?></h1>
+                <br>
+                <a href="post/edit-topic.php?id=<?= $req_topic['id'] ?>">Editer mon topic</a>
+                <br>
+                <br>
             </div>
+            <div class="col-3"></div>
 
-            <div class="col-3">
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
                 <div><?= nl2br($req_topic['contenu']); ?></div>
                 <br>
                 <div> De <?= $req_topic['prenom']; ?></div>
                 <div> Catégorie : <?= $req_topic['titre_post']; ?></div>
                 <div>Le <?= date_format(date_create($req_topic['date_creation']), 'd/m/Y à H:i'); ?></div>
             </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
 
 
-            <?php
-            require_once('../footer/footer.php');
-            ?>
+    <?php
+    require_once('../footer/footer.php');
+    ?>
 </body>
 
 </html>
